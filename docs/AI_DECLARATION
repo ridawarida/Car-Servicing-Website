@@ -1,0 +1,68 @@
+============================================================
+           AI USAGE DECLARATION
+============================================================
+
+Name: Nahin Warida
+Student ID: 22201196
+Assignment: 3
+Date: 8/03/2026
+
+------------------------------------------------------------
+1. AI TOOLS USED (check all that apply)
+------------------------------------------------------------
+[ ❌ ] None
+[ ❌] ChatGPT
+[ ❌] GitHub Copilot
+[ ❌] Google Gemini
+[ ❌] Claude
+[ ❌] Cursor
+[ ✅] Other: Deepseek
+
+------------------------------------------------------------
+2. PURPOSE OF AI USE (check all that apply)
+------------------------------------------------------------
+[✅ ] Learning/understanding concepts
+[✅] Debugging my code
+[❌ ] Generating code snippets
+[✅ ] Writing text content
+[❌] Design/styling ideas
+[❌ ] Image generation
+[❌ ] Other: ________________
+
+------------------------------------------------------------
+3. DESCRIPTION OF AI USE
+------------------------------------------------------------
+Briefly describe what you used AI for and how:
+
+Generating fake client data(Names, email, etc.)
+Finding appropriate input santization functions for forms
+Suggesting common car service types and prices
+
+
+
+
+
+------------------------------------------------------------
+4. AI-ASSISTED SECTIONS
+------------------------------------------------------------
+List specific files/sections where AI helped significantly:
+
+File: _________________ Section: _________________
+File: _________________ Section: _________________
+File: _________________ Section: _________________
+
+------------------------------------------------------------
+5. DECLARATION
+------------------------------------------------------------
+I declare that:
+- This disclosure is complete and accurate
+- I understand all code in my submission
+- I can explain and modify my work if asked
+- I take full responsibility for my submission
+
+Signature: _________Nahin______________
+Date: _____________08/03/26_____________
+
+============================================================
+Save as: docs/AI_Declaration.txt
+============================================================
