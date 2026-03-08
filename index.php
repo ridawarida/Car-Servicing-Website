@@ -9,9 +9,10 @@ $booking_error = '';
 if (isset($_POST['search_appointments'])) {
     $search_name = filter_var($_POST['search_name'], FILTER_SANITIZE_STRING);
     
-    $stmt = $conn->prepare("SELECT a.*, m.mechanic_name 
+    $stmt = $conn->prepare("SELECT a.*, m.mechanic_name, s.service_name, s.price 
                             FROM appointments a 
-                            JOIN mechanics m ON a.mechanic_id = m.mechanic_id 
+                            JOIN mechanics m ON a.mechanic_id = m.mechanic_id
+                            LEFT JOIN services s ON a.service_id = s.service_id
                             WHERE a.client_name LIKE ? 
                             ORDER BY a.appointment_date DESC");
     $search_term = "%$search_name%";
@@ -42,20 +43,23 @@ if (isset($_POST['book_appointment'])) {
         $errors[] = "This car already has an appointment on this date!";
     }
     
+    $get_max = $conn->prepare("SELECT max_appointments FROM mechanics WHERE mechanic_id = ?");
+    $get_max->execute([$mechanic_id]);
+    $max_limit = $get_max->fetchColumn();
+    
     $check_mechanic = $conn->prepare("SELECT COUNT(*) as booked FROM appointments 
                                       WHERE mechanic_id = ? AND appointment_date = ?");
     $check_mechanic->execute([$mechanic_id, $appointment_date]);
     $mechanic_count = $check_mechanic->fetch(PDO::FETCH_ASSOC);
     
-    if ($mechanic_count['booked'] >= 4) {
+    if ($mechanic_count['booked'] >= $max_limit) {
         $errors[] = "Selected mechanic is fully booked on this date!";
     }
-
     if (empty($service_id)) {
         $errors[] = "Please select a service";
     }
     
-    if (strtotime($appointment_date) < strtotime(date('d-m-Y'))) {
+    if (strtotime($appointment_date) < strtotime(date('Y-m-d'))) {
         $errors[] = "Appointment date cannot be in the past!";
     }
     
@@ -75,9 +79,7 @@ if (isset($_POST['book_appointment'])) {
 }
 
 $mechanics = $conn->query("SELECT * FROM mechanics ORDER BY mechanic_name");
-$stmt = $conn->prepare("SELECT a.*, m.mechanic_name, s.service_name, s.price  FROM appointments a JOIN mechanics m ON a.mechanic_id = m.mechanic_id 
-                        LEFT JOIN services s ON a.service_id = s.service_id WHERE a.client_name LIKE ? 
-                        ORDER BY a.appointment_date DESC");
+
 ?>
 
 <!DOCTYPE html>
@@ -203,7 +205,7 @@ $stmt = $conn->prepare("SELECT a.*, m.mechanic_name, s.service_name, s.price  FR
                     <div class="form-group">
                         <label for="appointment_date">Appointment Date *</label>
                         <input type="date" id="appointment_date" name="appointment_date" 
-                               min="<?php echo date('d-m-Y'); ?>" required>
+                               min="<?php echo date('Y-m-d'); ?>" required>
                     </div>
                     
                     <div class="form-group">
